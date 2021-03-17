@@ -8,7 +8,7 @@ struct no {
    struct no *ant;
 };
 typedef struct no No;
-
+typedef struct lista Lista;
 struct lista {
     int tam;
     No *ini;
@@ -18,31 +18,36 @@ struct lista {
 
 Lista *lst_cria(void){
     Lista *lst=(Lista*) malloc (sizeof(Lista));
-    if (lst==NULL) printf("Falha ao alocar memoria"); exit(1);
+    if (lst==NULL){ 
+	    printf("Falha ao alocar memoria"); 
+	    exit(1);
+    }
     lst->ini=NULL;
     lst->fin=NULL;
     lst->tam=0;
+    lst->corr = NULL;
     return lst;
 }
 
 int lst_vazia(Lista *lst){
-    if (lst==NULL) return 1;
+    if (lst->ini==NULL) return 1;
     return 0;
 }
 
 void lst_insIni(Lista *lst, void *v){
     No* novo= (No*)malloc (sizeof(No));
-    if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
+    //if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
     novo->info=v;
     novo->ant=NULL;
     
-    if (lst_vazia(lst)){// inicialização do No
+    if (lst_vazia(lst) == 1){// inicialização do No
         novo->prox=NULL;
         lst->ini=novo;
         lst->fin=novo;
     }
     else{ //atualização da Lista
         novo->prox=lst->ini;
+	lst->ini->ant = novo;
         lst->ini=novo;
     }
     lst->tam++;
@@ -50,10 +55,12 @@ void lst_insIni(Lista *lst, void *v){
 
 void lst_insFin(Lista *lst,void *v){
     No* novo= (No*)malloc (sizeof(No));
-    if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
+    //if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
     novo->info=v;
     novo->prox=NULL;
     
+    
+    novo->prox=NULL;
     if (lst_vazia(lst)){// inicialização do No
         novo->ant=NULL;
         lst->ini=novo;
@@ -61,6 +68,7 @@ void lst_insFin(Lista *lst,void *v){
     }
     else{ //atualização da Lista
         novo->ant=lst->fin;
+	lst->fin->prox = novo;
         lst->fin=novo;
     }
     lst->tam++;
