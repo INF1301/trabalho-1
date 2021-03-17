@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lista.h"
+#include "data.h"
 void exibeLista(Lista *f) {
 	int *aux;
 	puts("=== Elementos da Lista ***");

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "data.h"
 
 struct no {
    void *info;
@@ -7,6 +8,7 @@ struct no {
    struct no *ant;
 };
 typedef struct no No;
+
 struct lista {
     int tam;
     No *ini;
@@ -14,11 +16,9 @@ struct lista {
     No *corr;
 };
 
-
-typedef struct lista Lista;
-
 Lista *lst_cria(void){
     Lista *lst=(Lista*) malloc (sizeof(Lista));
+    if (lst==NULL) printf("Falha ao alocar memoria"); exit(1);
     lst->ini=NULL;
     lst->fin=NULL;
     lst->tam=0;
@@ -38,19 +38,34 @@ void lst_insIni(Lista *lst, void *v){
     
     if (lst_vazia(lst)){// inicialização do No
         novo->prox=NULL;
-        Lista->ini=novo;
-        Lista->fin=novo;
+        lst->ini=novo;
+        lst->fin=novo;
     }
     else{ //atualização da Lista
-        novo->prox=Lista->ini;
-        Lista->ini=novo;
+        novo->prox=lst->ini;
+        lst->ini=novo;
     }
-    Lista->tam++;
+    lst->tam++;
 }
 
 void lst_insFin(Lista *lst,void *v){
+    No* novo= (No*)malloc (sizeof(No));
+    if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
+    novo->info=v;
+    novo->prox=NULL;
     
+    if (lst_vazia(lst)){// inicialização do No
+        novo->ant=NULL;
+        lst->ini=novo;
+        lst->fin=novo;
+    }
+    else{ //atualização da Lista
+        novo->ant=lst->fin;
+        lst->fin=novo;
+    }
+    lst->tam++;
 }
+
 void *lst_retIni(Lista *lst){
     
 }
@@ -58,15 +73,33 @@ void *lst_retFin(Lista *lst){
     
 }
 void lst_posIni(Lista *lst){
-    
+	if(lst_vazia(lst)) {
+		lst->corr = NULL;
+	} else {
+		lst->corr = lst->ini;
+	}
 }
 void lst_posFin(Lista *lst){
-    
+	if(lst_vazia(lst)) {
+		lst->corr = NULL;
+	} else {
+		lst->corr = lst->fin;
+	}
 }
 void *lst_prox(Lista *lst){
-    
+	if(lst_vazia(lst)) {
+		lst->corr = NULL;
+	} else if(lst->corr->prox) {
+		lst->corr = lst->corr->prox;
+	}
+	
 }
 void *lst_ant(Lista *lst){
+	if(lst_vazia(lst)) {
+		lst->corr = NULL;
+	} else if(lst->corr->ant) {
+		lst->corr = lst->corr->ant;
+	}
     
 }
 void lst_libera(Lista *lst){
