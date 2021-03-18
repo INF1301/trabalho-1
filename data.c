@@ -8,7 +8,6 @@ struct no {
    struct no *ant;
 };
 typedef struct no No;
-typedef struct lista Lista;
 struct lista {
     int tam;
     No *ini;
@@ -35,16 +34,18 @@ int lst_vazia(Lista *lst){
 
 void lst_insIni(Lista *lst, void *v){
     No* novo= (No*)malloc (sizeof(No));
-    //if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
+    if (novo==NULL){
+	    printf("Falha ao alocar memoria");
+	    exit(1);
+    }
     novo->info=v;
     novo->ant=NULL;
     
-    if (lst_vazia(lst) == 1){// inicialização do No
+    if (lst_vazia(lst) == 1){
         novo->prox=NULL;
         lst->ini=novo;
         lst->fin=novo;
-    }
-    else{ //atualização da Lista
+    } else {
         novo->prox=lst->ini;
 	lst->ini->ant = novo;
         lst->ini=novo;
@@ -54,18 +55,20 @@ void lst_insIni(Lista *lst, void *v){
 
 void lst_insFin(Lista *lst,void *v){
     No* novo= (No*)malloc (sizeof(No));
-    //if (novo==NULL) printf("Falha ao alocar memoria"); exit(1);
+    if (novo==NULL){
+	    printf("Falha ao alocar memoria");
+	    exit(1);
+    }
     novo->info=v;
     novo->prox=NULL;
     
     
     novo->prox=NULL;
-    if (lst_vazia(lst)){// inicialização do No
+    if (lst_vazia(lst)){
         novo->ant=NULL;
         lst->ini=novo;
         lst->fin=novo;
-    }
-    else{ //atualização da Lista
+    } else {
         novo->ant=lst->fin;
 	lst->fin->prox = novo;
         lst->fin=novo;
@@ -157,6 +160,7 @@ void lst_libera(Lista *lst){
 			lst->ini = no->prox;
 			free(no);
 			lst->tam--;
+			no = lst->ini;
 		}
 		free(lst);
 	}
