@@ -1,13 +1,13 @@
 typedef struct lista Lista;
 
 Lista *lst_cria(void);
-int lst_vazia(Lista *lst);
-void lst_insIni(Lista *lst, void *v);
-void lst_insFin(Lista *lst,void *v);
-void *lst_retIni(Lista *lst);
-void *lst_retFin(Lista *lst);
-void lst_posIni(Lista *lst);
-void lst_posFin(Lista *lst);
-void *lst_prox(Lista *lst);
-void *lst_ant(Lista *lst);
-void lst_libera(Lista *lst);
+int lst_vazia(Lista *);
+void lst_insIni(Lista *, void *);
+void lst_insFin(Lista *,void *);
+void *lst_retIni(Lista *);
+void *lst_retFin(Lista *);
+void lst_posIni(Lista *);
+void lst_posFin(Lista *);
+void *lst_prox(Lista *);
+void *lst_ant(Lista *);
+void lst_libera(Lista *);
