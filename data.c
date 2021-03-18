@@ -79,6 +79,7 @@ void lst_insFin(Lista *lst,void *v){
 void *lst_retIni(Lista *lst){
 	No* no; void* v;
         if (!lst_vazia(lst)) {
+		if(lst->corr == lst->ini) lst->corr = NULL;
 		no = lst->ini;
 		v = no->info;
 		if (lst->ini == lst->fin) {
@@ -97,6 +98,7 @@ void *lst_retIni(Lista *lst){
 void *lst_retFin(Lista *lst){
     	No* no; void* v;
         if (!lst_vazia(lst)) {
+		if(lst->corr == lst->fin) lst->corr = NULL;
 		no = lst->fin;
 		v = no->info;
 		if (lst->ini == lst->fin) {
@@ -128,41 +130,39 @@ void lst_posFin(Lista *lst){
 	}
 }
 void *lst_prox(Lista *lst){
-	if(lst_vazia(lst)) {
-		lst->corr = NULL;
+	void* v;
+	if(!lst->corr || lst_vazia(lst)){
+	       	return NULL;
 	} else {
+		v = lst->corr->info;
 		lst->corr = lst->corr->prox;
+		
 	}
-	if(lst->corr){ 
-		return lst->corr->info;
-	} else {
-		return NULL;
-	}
+	return v;
 }
 void *lst_ant(Lista *lst){
-	if(lst_vazia(lst)) {
-		lst->corr = NULL;
+	void* v;
+	if(!lst->corr || lst_vazia(lst)){
+	       	return NULL;
 	} else {
+		v = lst->corr->info;
 		lst->corr = lst->corr->ant;
 	}
-	if(lst->corr){ 
-		return lst->corr->info;
-	} else {
-		return NULL;
-	}
-    
+	return v;
 }
 void lst_libera(Lista *lst){
-	No* no = lst->ini;
-	lst_posIni(lst);
+	No* no;
 	if(!lst_vazia(lst)) {
+		no = lst->ini;
+		lst_posIni(lst);
 		while(no){
 			lst->ini = no->prox;
+			free(no->info);
 			free(no);
 			lst->tam--;
 			no = lst->ini;
 		}
-		free(lst);
 	}
+	free(lst);
 }
 
