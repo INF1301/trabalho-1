@@ -25,7 +25,6 @@ Lista *lst_cria(void){
     lst->ini=NULL;
     lst->fin=NULL;
     lst->tam=0;
-    lst->corr = NULL;
     return lst;
 }
 
@@ -131,7 +130,11 @@ void *lst_prox(Lista *lst){
 	} else {
 		lst->corr = lst->corr->prox;
 	}
-	return lst->corr->info;
+	if(lst->corr){ 
+		return lst->corr->info;
+	} else {
+		return NULL;
+	}
 }
 void *lst_ant(Lista *lst){
 	if(lst_vazia(lst)) {
@@ -139,7 +142,11 @@ void *lst_ant(Lista *lst){
 	} else {
 		lst->corr = lst->corr->ant;
 	}
-	return lst->corr->info;
+	if(lst->corr){ 
+		return lst->corr->info;
+	} else {
+		return NULL;
+	}
     
 }
 void lst_libera(Lista *lst){
